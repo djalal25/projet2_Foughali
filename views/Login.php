@@ -11,9 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         SessionManager::setSessionData('user_id', $result['user_id']);
         SessionManager::setSessionData('token', $result['token']);
         if ($result['role'] == 3 || $result['role'] == 2) {
-            header("Location: produit"); // Remplacez "Page1.php" par la page pour les rôles 1 et 2
+            header("Location: produit"); 
         } elseif ($result['role'] == 1) {
-            header("Location: ./Admin.php"); // Remplacez "Page2.php" par la page pour le rôle 3
+            header("Location: admin"); 
         }
 
         exit();
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php endif; ?>
 
                             <div class="mb-3">
-                                <label class="form-label">Vous n'estes pas membre inscrivez vous ? <a href="Signup.php" style="color: navy; font-weight:bold; text-decoration:none;">Inscription</a></label>
+                                <label class="form-label">Vous n'estes pas membre inscrivez vous ? <a href="register" style="color: navy; font-weight:bold; text-decoration:none;">Inscription</a></label>
                             </div>
                             <div class="container" style="text-align: center;">
                                 <button type="submit" name="connexion" class="btn btn-primary">Connexion</button>

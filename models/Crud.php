@@ -50,37 +50,40 @@ class Crud
     }
 
     public function add($table, $data)
-    {
+{
+    $columns = implode(", ", array_keys($data));
+    $placeholders = ":" . implode(", :", array_keys($data));
+
+    if (isset($data['id'])) {
+        unset($data['id']);
         $columns = implode(", ", array_keys($data));
         $placeholders = ":" . implode(", :", array_keys($data));
-
-        if (isset($data['id'])) {
-            unset($data['id']);
-            $columns = implode(", ", array_keys($data));    
-            $placeholders = ":" . implode(", :", array_keys($data));
-        }
-
-        $nextIdStatement = $this->connexion->query("SELECT MAX(id) + 1 as next_id FROM $table");
-        $nextId = $nextIdStatement->fetch(PDO::FETCH_ASSOC)['next_id'] ?? 1;
-
-        $nextId = $nextId ?: 1;
-
-        $columns .= ', id';
-        $placeholders .= ', :id';
-
-        $data['id'] = $nextId;
-
-        $request = "INSERT INTO $table ($columns) VALUES ($placeholders)";
-
-        $PDOStatement = $this->connexion->prepare($request);
-
-        foreach ($data as $key => $value) {
-            $paramType = is_numeric($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
-            $PDOStatement->bindValue(':' . $key, $value, $paramType);
-        }
-
-        $PDOStatement->execute();
     }
+
+    $nextIdStatement = $this->connexion->query("SELECT MAX(id) + 1 as next_id FROM $table");
+    $nextId = $nextIdStatement->fetch(PDO::FETCH_ASSOC)['next_id'] ?? 1;
+
+    $nextId = $nextId ?: 1;
+
+    $columns .= ', id';
+    $placeholders .= ', :id';
+
+    $data['id'] = $nextId;
+
+    $request = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+
+    $PDOStatement = $this->connexion->prepare($request);
+
+    foreach ($data as $key => $value) {
+        $paramType = is_numeric($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+        $PDOStatement->bindValue(':' . $key, $value, $paramType);
+    }
+
+    $success = $PDOStatement->execute();
+
+    return $success;
+}
+
 
 
 
@@ -117,6 +120,14 @@ class Crud
         } catch (PDOException $e) {
             throw new Exception("Error deleting item: " . $e->getMessage());
         }
+    }
+    ////
+
+    public function deleteByUsername($table, $username)
+    {
+    $stmt = $this->connexion->prepare("DELETE FROM $table WHERE username = :username");
+    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+    return $stmt->execute();
     }
 
     public function __destruct()

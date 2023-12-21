@@ -6,7 +6,7 @@ $url = $_SERVER['REQUEST_URI'];
 
 //$urltrim = ltrim($url, '/ecom-2/mvc/');
 $explodeUrl = explode('/', $url);
-var_dump($explodeUrl[2]);
+//var_dump($explodeUrl[2]);
 switch ($explodeUrl[2]) {
     case 'register':
         $page = new PageController;
@@ -18,13 +18,36 @@ switch ($explodeUrl[2]) {
         $page->loginPage();
         break;
         
-        case 'produit':
+     case 'produit':
+         $page = new PageController;
+         $page->produitspage();
+         break;
+           
+    
+     case 'admin':
             $page = new PageController;
-            $page->produitspage();
+            $page-> adminpage();
             break;
 
-        default:
-         $page = new PageController;
-         $page->homePage();
-        break;
+     case 'ajoutP':
+            $page = new PageController;
+            $page->  ajoutProduitpage();
+         break;
+      
+     case 'gestionUs':
+        $page = new PageController;
+        $page->  gestionUserpage();
+         break;
+     ///
+     case 'TEST':
+        $page = new PageController;
+        $page->   testpage();
+         break;
+        
+     
+
+     default:
+     $page = new PageController;
+     $page->homePage();
+     break;
 }

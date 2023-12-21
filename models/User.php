@@ -105,6 +105,28 @@ class User extends Crud
     {
         return $this->deleteById('user', $id);
     }
+    ////
+    public function deleteUserByUsername($username)
+  {
+    $user = $this->getUserByUsername($username);
+
+    if (!$user) {
+        return false; // L'utilisateur n'existe pas
+    }
+
+    return $this->deleteUserById($user['id']);
+   }
+///new
+   public function deleteUser($identifier)
+   {
+    if (is_numeric($identifier)) {
+        return $this->deleteUserById($identifier);
+    } else {
+        return $this->deleteUserByUsername($identifier);
+    }
+   }
+
+
 
     protected function hashPassword($password)
     {
