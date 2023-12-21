@@ -25,28 +25,37 @@ switch ($explodeUrl[2]) {
            
     
      case 'admin':
-            $page = new PageController;
-            $page-> adminpage();
-            break;
+        $page = new PageController;
+        $page-> adminpage();
+         break;
 
      case 'ajoutP':
-            $page = new PageController;
-            $page->  ajoutProduitpage();
+        $page = new PageController;
+        $page->  ajoutProduitpage();
          break;
       
      case 'gestionUs':
         $page = new PageController;
         $page->  gestionUserpage();
          break;
-     ///
-     case 'TEST':
-        $page = new PageController;
-        $page->   testpage();
-         break;
-        
-     
 
-     default:
+     case 'chercheu':
+        $page = new PageController;
+        $page-> chercherUtilisateurpage();
+        break;
+
+     case 'deleteu':
+        $page = new PageController;
+        $page-> deleteUserpage();
+        break;
+
+     case 'updateu':
+        $page = new PageController;
+        $page-> updatUserpage();
+        break;
+     
+        
+      default:
      $page = new PageController;
      $page->homePage();
      break;

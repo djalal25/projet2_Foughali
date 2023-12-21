@@ -105,7 +105,7 @@ require_once('./controllers/session.php');
         <a href="ajoutP">Gestion Produit</a>
         <a href="gestionUs">Gestion Utilisateurs</a>
         <form action="logout.php" method="post">
-            <button type="submit" name="logout">Déconnexion</button>
+            
         </form>
     </div>
 

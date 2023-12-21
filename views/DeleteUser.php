@@ -1,5 +1,27 @@
 <?php
+// Inclure la définition de la classe User
+require_once('./models/User.php');
 
+ //supprimer utilisateur 
+// Définir une variable pour stocker les messages de résultat
+$resultMessage = '';
+
+// Supprimer l'utilisateur si le formulaire est soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_user'])) {
+    $usernameToDelete = $_POST['user_identifier'];
+
+    // Instancier la classe User
+    $userModel = new User();
+
+    // Supprimer l'utilisateur par nom d'utilisateur
+    $result = $userModel->deleteUserByUsername($usernameToDelete);
+
+    if ($result) {
+        $resultMessage = '<div class="alert alert-success" role="alert">Utilisateur supprimé avec succès!</div>';
+    } else {
+        $resultMessage = '<div class="alert alert-danger" role="alert">Échec de la suppression de l\'utilisateur.</div>';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +30,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gestion Utilisateur</title>
+    <title>Supprimer un Utilisateur</title>
     <style>
         body {
             margin: 0;
@@ -16,7 +38,6 @@
             background-size: cover;
             background-position: center;
             font-family: Arial, sans-serif;
-            background-image: url('./photo/jordan1.webp');
         }
 
         .navbar {
@@ -99,7 +120,20 @@
 
     </div>
 
-    
+    <main>
+        <div class="add-product-container">
+            <h3>Supprimer un Utilisateur</h3>
+            <?php echo $resultMessage; // Afficher le message de résultat ?>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="user_identifier">ID ou Nom d'Utilisateur:</label>
+                    <input type="text" name="user_identifier" required>
+                </div>
+
+                <button type="submit" name="delete_user">Supprimer l'Utilisateur</button>
+            </form>
+        </div>
+    </main>
 </body>
 
 </html>

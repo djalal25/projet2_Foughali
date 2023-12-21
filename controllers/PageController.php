@@ -28,9 +28,14 @@ class PageController
       require('./views/GestionUser.php');
      }
       
-     ///
-     public function testpage(){
-      require('./views/TEST.php');
+     public function chercherUtilisateurpage(){
+      require('./views/FindUser.php');
+     }
+     public function deleteUserpage(){
+      require('./views/DeleteUser.php');
+     }
+     public function updatUserpage(){
+      require('./views/UpdatUser.php');
      }
     
  
